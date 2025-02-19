@@ -21,8 +21,8 @@ const router = createRouter({
     {
       path: '/auction',
       name: 'auction',
-      component: () => import('../views/AuctionView.vue')
-    }
+      component: () => import('../views/AuctionView.vue'),
+    },
   ],
 })
 

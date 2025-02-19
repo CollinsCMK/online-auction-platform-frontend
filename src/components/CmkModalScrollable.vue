@@ -7,7 +7,9 @@
     <div
       class="bg-linear-to-r from-flex-purple to-purple-600 p-4 sm:p-5 text-white flex items-center justify-between"
     >
-      <h4 class="font-bold text-lg sm:text-xl tracking-wide text-white dark:text-white">{{ title }}</h4>
+      <h4 class="font-bold text-lg sm:text-xl tracking-wide text-white dark:text-white">
+        {{ title }}
+      </h4>
 
       <div
         @click="$emit('cancel')"
@@ -19,7 +21,9 @@
 
     <div class="backdrop-blur-xs bg-white/90 dark:bg-gray-900/90">
       <form @submit.prevent="$emit('submitForm')" class="p-4 sm:p-6 md:p-8">
-        <div class="grow overflow-auto max-h-[40vh] sm:max-h-[50vh] pb-5 prose dark:prose-invert text-black dark:text-white">
+        <div
+          class="grow overflow-auto max-h-[40vh] sm:max-h-[50vh] pb-5 prose dark:prose-invert text-black dark:text-white"
+        >
           <slot />
         </div>
 

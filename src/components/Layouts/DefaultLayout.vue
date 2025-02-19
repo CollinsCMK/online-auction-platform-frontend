@@ -111,7 +111,7 @@
       >
         <div class="flex-1 p-6 overflow-y-auto">
           <RouterLink
-            to="/"
+            to="/admin"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
             <RiDashboard3Fill
@@ -121,93 +121,43 @@
           </RouterLink>
 
           <RouterLink
-            to="/queue"
+            to="/auctions"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
-            <FaPersonWalkingDashedLineArrowRight
+            <RiAuctionFill
               class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
             />
-            <span class="font-medium">Queue</span>
+            <span class="font-medium">Auctions</span>
           </RouterLink>
 
           <RouterLink
-            to="/services"
+            to="/listings"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
-            <FaGears
+            <FaListUl
               class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
             />
-            <span class="font-medium">Services</span>
+            <span class="font-medium">Listings</span>
           </RouterLink>
 
           <RouterLink
-            to="/counters"
+            to="/bids"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
-            <FaPersonBooth
+            <BiDollar
               class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
             />
-            <span class="font-medium">Counters</span>
+            <span class="font-medium">Bids</span>
           </RouterLink>
 
           <RouterLink
-            to="/assign-counters"
+            to="/auction-result"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
-            <FaUserCheck
+            <RiAuctionFill
               class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
             />
-            <span class="font-medium">Assign Counters</span>
-          </RouterLink>
-
-          <RouterLink
-            to="/tickets"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
-          >
-            <FaTicket
-              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
-            />
-            <span class="font-medium">Tickets</span>
-          </RouterLink>
-
-          <RouterLink
-            to="/users"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
-          >
-            <FaPerson
-              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
-            />
-            <span class="font-medium">Staffs</span>
-          </RouterLink>
-
-          <RouterLink
-            to="/reports"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
-          >
-            <BiSolidReport
-              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
-            />
-            <span class="font-medium">Reports</span>
-          </RouterLink>
-
-          <RouterLink
-            to="/roles"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
-          >
-            <RiUserSettingsFill
-              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
-            />
-            <span class="font-medium">Roles</span>
-          </RouterLink>
-
-          <RouterLink
-            to="/system-logs"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
-          >
-            <RiUserSettingsFill
-              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
-            />
-            <span class="font-medium">System Logs</span>
+            <span class="font-medium">Auction Result</span>
           </RouterLink>
         </div>
 
@@ -305,12 +255,11 @@ import CmkCard from '../CmkCard.vue'
 import CmkToggleSwitch from '../CmkToggleSwitch.vue'
 import { useThemeStore } from '../../stores/theme'
 import { onClickOutside } from '@vueuse/core'
-import { FaBars, FaPersonBooth, FaUserCheck, FaHome, FaChevronRight } from 'vue3-icons/fa'
+import { FaBars, FaListUl, FaHome, FaChevronRight } from 'vue3-icons/fa'
 import { VscColorMode } from 'vue3-icons/vsc'
 import { IoNotifications } from 'vue3-icons/io5'
-import { BiSolidReport } from 'vue3-icons/bi'
-import { FaGears, FaPerson, FaPersonWalkingDashedLineArrowRight, FaTicket } from 'vue3-icons/fa6'
-import { RiUserSettingsFill } from 'vue3-icons/ri'
+import { RiAuctionFill } from 'vue3-icons/ri'
+import { BiDollar } from 'vue3-icons/bi'
 
 const route = useRoute()
 const currentYear = computed(() => new Date().getFullYear())

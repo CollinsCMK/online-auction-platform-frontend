@@ -22,7 +22,9 @@
         :disabled="currentPage === 1"
         class="p-3 rounded-md text-white transition-colors duration-200"
         :class="
-          currentPage === 1 ? 'cursor-not-allowed bg-gray-800/[.1]' : 'cursor-pointer bg-gray-800 hover:bg-gray-700'
+          currentPage === 1
+            ? 'cursor-not-allowed bg-gray-800/[.1]'
+            : 'cursor-pointer bg-gray-800 hover:bg-gray-700'
         "
       >
         <FaAngleLeft />
@@ -68,11 +70,9 @@ const searchQuery = ref('')
 
 const filteredItems = computed(() => {
   if (!searchQuery.value) return items.value
-  return items.value.filter(item => {
+  return items.value.filter((item) => {
     const searchStr = searchQuery.value.toLowerCase().trim()
-    return Object.values(item).some(val => 
-      String(val).toLowerCase().includes(searchStr)
-    )
+    return Object.values(item).some((val) => String(val).toLowerCase().includes(searchStr))
   })
 })
 

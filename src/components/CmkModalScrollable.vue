@@ -7,19 +7,19 @@
     <div
       class="bg-linear-to-r from-flex-purple to-purple-600 p-4 sm:p-5 text-white flex items-center justify-between"
     >
-      <h4 class="font-bold text-lg sm:text-xl tracking-wide">{{ title }}</h4>
+      <h4 class="font-bold text-lg sm:text-xl tracking-wide text-white dark:text-white">{{ title }}</h4>
 
       <div
         @click="$emit('cancel')"
         class="flex items-center justify-center w-7 h-7 rounded-full border border-white/50 cursor-pointer hover:bg-white/20 transition-colors duration-200"
       >
-        <IoIosClose class="text-2xl sm:text-3xl" />
+        <IoIosClose class="text-2xl sm:text-3xl text-white dark:text-white" />
       </div>
     </div>
 
     <div class="backdrop-blur-xs bg-white/90 dark:bg-gray-900/90">
       <form @submit.prevent="$emit('submitForm')" class="p-4 sm:p-6 md:p-8">
-        <div class="grow overflow-auto max-h-[40vh] sm:max-h-[50vh] pb-5 prose dark:prose-invert">
+        <div class="grow overflow-auto max-h-[40vh] sm:max-h-[50vh] pb-5 prose dark:prose-invert text-black dark:text-white">
           <slot />
         </div>
 
@@ -36,13 +36,13 @@
 
           <CmkButtonLoader
             v-if="isLoading"
-            class="w-full sm:w-auto bg-flex-purple/[.5] text-white shadow-lg"
+            class="w-full sm:w-auto bg-flex-purple/[.5] text-white dark:text-white shadow-lg"
             name="Saving"
           />
           <CmkButton
             v-else
             type="submit"
-            class="w-full sm:w-auto bg-linear-to-r from-flex-purple to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
+            class="w-full sm:w-auto bg-linear-to-r from-flex-purple to-purple-600 text-white dark:text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
           >
             Save
           </CmkButton>

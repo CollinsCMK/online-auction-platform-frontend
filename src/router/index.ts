@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'auction',
       component: () => import('../views/AuctionView.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'page-not-found',
+      component: () => import('../views/PageNotFoundView.vue')
+    }
   ],
 })
 

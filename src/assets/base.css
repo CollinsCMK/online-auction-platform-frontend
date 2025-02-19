@@ -2,8 +2,8 @@
   width: 5px;
   height: 5px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
-background: #BF0A80; 
-border-radius: 5px;
+  background: #bf0a80;
+  border-radius: 5px;
 }

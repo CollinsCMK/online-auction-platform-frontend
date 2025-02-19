@@ -1,11 +1,9 @@
 <template>
-  <DefaultLayout>
-
-  </DefaultLayout>
+  <TopLayout />
 </template>
 
 <script setup lang="ts">
-import DefaultLayout from '@/components/Layouts/DefaultLayout.vue';
+import TopLayout from '@/components/Layouts/TopLayout.vue'
 
-
+// import DefaultLayout from '@/components/Layouts/DefaultLayout.vue'
 </script>

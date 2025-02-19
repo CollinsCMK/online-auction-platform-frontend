@@ -51,8 +51,7 @@
               </p>
 
               <div class="text-xs md:text-sm hidden lg:block">
-                <p class="font-bold truncate max-w-[120px]">Collins</p>
-                <p class="opacity-90">Kariuki</p>
+                <p class="font-bold truncate max-w-[120px]">Collins Kariuki</p>
               </div>
             </div>
 

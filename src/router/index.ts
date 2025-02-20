@@ -19,6 +19,11 @@ const router = createRouter({
       component: () => import('../views/AuctionsView.vue'),
     },
     {
+      path: '/admin/listings',
+      name: 'admin-listings-all',
+      component: () => import('../views/ListingsView.vue'),
+    },
+    {
       path: '/admin/listings/:id',
       name: 'admin-listings',
       component: () => import('../views/ListingView.vue'),

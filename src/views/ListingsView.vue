@@ -1,18 +1,42 @@
 <template>
   <DefaultLayout>
     <CmkTable
-      :items="auctions"
+      :items="listings"
       :isCreate="true"
       :isExport="true"
       :isRefresh="true"
       :isRefreshing="isRefreshing"
       @create="openCreateModal"
-      @refresh="getAllAuctions"
-      :exportableItems="['rowNumber', 'name', 'start_time', 'end_time', 'updated_at']"
-      :searchableItems="['rowNumber', 'name', 'start_time', 'end_time', 'updated_at']"
+      @refresh="getAllListings"
+      :exportableItems="[
+        'rowNumber',
+        'title',
+        'description',
+        'base_price',
+        'available_volume',
+        'auction_name',
+        'start_time',
+        'end_time',
+        'updated_at',
+      ]"
+      :searchableItems="[
+        'rowNumber',
+        'title',
+        'description',
+        'base_price',
+        'available_volume',
+        'auction_name',
+        'start_time',
+        'end_time',
+        'updated_at',
+      ]"
     >
       <CmkColumn field="rowNumber" header="#" fixed="left"></CmkColumn>
-      <CmkColumn field="name" header="Name"></CmkColumn>
+      <CmkColumn field="title" header="Title"></CmkColumn>
+      <CmkColumn field="description" header="Description"></CmkColumn>
+      <CmkColumn field="base_price" header="Base Price"></CmkColumn>
+      <CmkColumn field="available_volume" header="Available Volume"></CmkColumn>
+      <CmkColumn field="auction_name" header="Auction Name"></CmkColumn>
       <CmkColumn header="Start Time">
         <template #default="slotProps">
           {{ new Date(slotProps.item.start_time).toLocaleString() }}
@@ -32,10 +56,10 @@
         <template #default="slotProps">
           <div class="flex items-center gap-3">
             <RouterLink
-              :to="`/admin/listings/${slotProps.item.id}`"
+              :to="`/admin/bids/${slotProps.item.id}`"
               class="rounded-full border-2 border-green-500/30 text-green-500 hover:bg-green-500/10 transition-colors cursor-pointer px-4 py-2 font-medium"
             >
-              Listings
+              Bids
             </RouterLink>
 
             <button
@@ -59,83 +83,153 @@
 
   <CmkModalScrollable
     v-if="isCreate"
-    title="Create an auction"
+    title="Create a listing"
     :isLoading="isCreating"
     myClass=""
     @cancel="closeCreateModal"
-    @submitForm="createAuction"
+    @submitForm="createListing"
   >
     <div class="relative mb-4">
-      <label for="name" class="block mb-2">Auction Name</label>
+      <label for="title" class="block mb-2">Title</label>
 
       <CmkTextInput
-        v-model:input="form.name"
-        placeholder="Enter auction name"
+        v-model:input="form.title"
+        placeholder="Enter listing title"
         inputType="text"
         class="w-full"
-        id="name"
+        id="title"
       />
     </div>
 
     <div class="relative mb-4">
-      <label for="start_time" class="mb-2 block">Start Time:</label>
+      <label for="description" class="block mb-2">Description</label>
 
-      <VueDatePicker
-        v-model="form.start_time"
-        placeholder="Start time"
-        :dark="theme.isDark as boolean"
-      ></VueDatePicker>
+      <CmkTextArea
+        v-model:input="form.description"
+        placeholder="Enter listing description"
+        inputType="text"
+        class="w-full"
+        id="description"
+      />
     </div>
 
     <div class="relative mb-4">
-      <label for="end_time" class="mb-2 block">End Time:</label>
+      <label for="base_price" class="block mb-2">Base Price</label>
 
-      <VueDatePicker
-        v-model="form.end_time"
-        placeholder="End time"
-        :dark="theme.isDark as boolean"
-      ></VueDatePicker>
+      <CmkTextInput
+        v-model:input="form.base_price"
+        placeholder="Enter listing base price"
+        inputType="number"
+        class="w-full"
+        id="base_price"
+      />
+    </div>
+
+    <div class="relative mb-4">
+      <label for="available_volume" class="block mb-2">Available Volume</label>
+
+      <CmkTextInput
+        v-model:input="form.available_volume"
+        placeholder="Enter listing available volume"
+        inputType="number"
+        class="w-full"
+        id="available_volume"
+      />
+    </div>
+
+    <div class="relative w-full">
+      <label for="auction" class="mb-2 block">Select Auction</label>
+
+      <CmkSelector
+        v-model:input="form.auction_name"
+        placeholder="Select auction"
+        searchPlaceholder="Search auction..."
+        inputType="text"
+        :max="50"
+        :autoFocus="true"
+        :disabled="true"
+        error=""
+        :items="auctions"
+        @selectedItem="handleSelectAuction"
+        displayKey="name"
+        id="auction"
+      />
     </div>
   </CmkModalScrollable>
 
   <CmkModalScrollable
     v-if="isEdit"
-    title="Edit an existing auction"
+    title="Edit an existing listing"
     :isLoading="isEditing"
     myClass=""
     @cancel="closeEditModal"
-    @submitForm="updateAuction"
+    @submitForm="updateListing"
   >
     <div class="relative mb-4">
-      <label for="name" class="block mb-2">Auction Name</label>
+      <label for="title" class="block mb-2">Title</label>
 
       <CmkTextInput
-        v-model:input="form.name"
-        placeholder="Enter auction name"
+        v-model:input="form.title"
+        placeholder="Enter listing title"
         inputType="text"
         class="w-full"
-        id="name"
+        id="title"
       />
     </div>
 
     <div class="relative mb-4">
-      <label for="start_time" class="mb-2 block">Start Time:</label>
+      <label for="description" class="block mb-2">Description</label>
 
-      <VueDatePicker
-        v-model="form.start_time"
-        placeholder="Start time"
-        :dark="theme.isDark as boolean"
-      ></VueDatePicker>
+      <CmkTextArea
+        v-model:input="form.description"
+        placeholder="Enter listing description"
+        inputType="text"
+        class="w-full"
+        id="description"
+      />
     </div>
 
     <div class="relative mb-4">
-      <label for="end_time" class="mb-2 block">End Time:</label>
+      <label for="base_price" class="block mb-2">Base Price</label>
 
-      <VueDatePicker
-        v-model="form.end_time"
-        placeholder="End time"
-        :dark="theme.isDark as boolean"
-      ></VueDatePicker>
+      <CmkTextInput
+        v-model:input="form.base_price"
+        placeholder="Enter listing base price"
+        inputType="number"
+        class="w-full"
+        id="base_price"
+      />
+    </div>
+
+    <div class="relative mb-4">
+      <label for="available_volume" class="block mb-2">Available Volume</label>
+
+      <CmkTextInput
+        v-model:input="form.available_volume"
+        placeholder="Enter listing available volume"
+        inputType="number"
+        class="w-full"
+        id="available_volume"
+      />
+    </div>
+
+    <div class="relative w-full">
+      <label for="auction" class="mb-2 block">Select Auction</label>
+
+      <CmkSelector
+        v-model:input="form.auction_name"
+        placeholder="Select auction"
+        searchPlaceholder="Search auction..."
+        inputType="text"
+        :max="50"
+        :autoFocus="true"
+        :disabled="true"
+        error=""
+        :items="auctions"
+        @selectedItem="handleSelectAuction"
+        displayKey="name"
+        id="auction"
+      />
     </div>
   </CmkModalScrollable>
 
@@ -148,7 +242,7 @@
     <hr class="my-4 border-gray-300 dark:border-gray-600" />
 
     <p class="text-gray-600 dark:text-gray-300">
-      The selected auction will be deleted
+      The selected listing will be deleted
       <span class="font-semibold text-red-600 dark:text-red-500">permanently</span>.
     </p>
 
@@ -169,7 +263,7 @@
 
       <CmkButton
         v-else
-        @click="deleteAuction(auctionId)"
+        @click="deleteListing(listingId)"
         type="submit"
         class="bg-red-800 text-white dark:bg-red-700 px-4 py-2 rounded-lg hover:bg-red-900 dark:hover:bg-red-800 transition"
       >
@@ -184,22 +278,30 @@ import CmkColumn from '@/components/CmkColumn.vue'
 import CmkModalScrollable from '@/components/CmkModalScrollable.vue'
 import CmkTable from '@/components/CmkTable.vue'
 import DefaultLayout from '@/components/Layouts/DefaultLayout.vue'
-import { useAuctionStore } from '@/stores/auction'
 import { useToastStore } from '@/stores/toast'
 import { onMounted, provide, ref } from 'vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
 import { useThemeStore } from '@/stores/theme'
 import CmkTextInput from '@/components/CmkTextInput.vue'
+import CmkTextArea from '@/components/CmkTextArea.vue'
+import CmkSelector from '@/components/CmkSelector.vue'
 import CmkModal from '@/components/CmkModal.vue'
 import CmkButton from '@/components/CmkButton.vue'
 import CmkButtonLoader from '@/components/CmkButtonLoader.vue'
 import { FaEdit } from 'vue3-icons/fa'
 import { RiDeleteBin6Fill } from 'vue3-icons/ri'
+import { useListingStore } from '@/stores/listings'
+import { useRoute } from 'vue-router'
+import { useAuctionStore } from '@/stores/auction'
 
+interface FormData {
+  [key: string]: string | number
+}
+const route = useRoute()
 const auctions = ref([])
+const listings = ref([])
 const theme = useThemeStore()
 const auctionStore = useAuctionStore()
+const listingStore = useListingStore()
 const toast = useToastStore()
 const isRefreshing = ref(false)
 const isCreate = ref(false)
@@ -209,11 +311,14 @@ const isEditing = ref(false)
 const isDelete = ref(false)
 const isDeleting = ref(false)
 const form = ref({
-  name: '',
-  start_time: new Date(),
-  end_time: new Date(),
+  title: '',
+  description: '',
+  base_price: '',
+  available_volume: '',
+  auction_id: '',
+  auction_name: '',
 })
-const auctionId = ref<null | number>(null)
+const listingId = ref<null | number>(null)
 
 const openCreateModal = () => {
   isCreate.value = true
@@ -221,51 +326,57 @@ const openCreateModal = () => {
 
 const closeCreateModal = () => {
   isCreate.value = false
-  form.value.name = ''
-  form.value.start_time = new Date()
-  form.value.end_time = new Date()
+  form.value.title = ''
+  form.value.description = ''
+  form.value.base_price = ''
+  form.value.available_volume = ''
+  form.value.auction_id = ''
 }
 
 const openEditModal = (data) => {
-  form.value.name = data.name
-  form.value.start_time = new Date(data.start_time)
-  form.value.end_time = new Date(data.end_time)
-  auctionId.value = data.id
+  form.value.title = data.title
+  form.value.description = data.description
+  form.value.base_price = data.base_price
+  form.value.available_volume = data.available_volume
+  form.value.auction_id = data.auction_id
+  listingId.value = data.id
   isEdit.value = true
 }
 
 const closeEditModal = () => {
-  form.value.name = ''
-  form.value.start_time = new Date()
-  form.value.end_time = new Date()
-  auctionId.value = null
+  form.value.title = ''
+  form.value.description = ''
+  form.value.base_price = ''
+  form.value.available_volume = ''
+  form.value.auction_id = ''
   isEdit.value = false
 }
 
 const openDeleteModal = (id: number) => {
-  auctionId.value = id
+  listingId.value = id
   isDelete.value = true
 }
 
 const closeDeleteModal = () => {
-  auctionId.value = null
+  listingId.value = null
   isDelete.value = false
 }
 
-const formatDateTime = (date) => {
-  if (!date) return null
-  const d = new Date(date.toUTCString())
-  return `${d.getUTCFullYear()}-${(d.getUTCMonth() + 1).toString().padStart(2, '0')}-${d.getUTCDate().toString().padStart(2, '0')}T${d.getUTCHours().toString().padStart(2, '0')}:${d.getUTCMinutes().toString().padStart(2, '0')}:${d.getUTCSeconds().toString().padStart(2, '0')}`
+const handleSelectAuction = (item: FormData) => {
+  form.value.auction_id = item.id as string
+  form.value.auction_name = item.name as string
 }
 
-const createAuction = async () => {
+const createListing = async () => {
   isCreating.value = true
 
   try {
-    const res = await auctionStore.createAuction({
-      name: form.value.name,
-      start_time: formatDateTime(form.value.start_time),
-      end_time: formatDateTime(form.value.end_time),
+    const res = await listingStore.createListing({
+      title: form.value.title,
+      description: form.value.description,
+      base_price: form.value.base_price,
+      available_volume: form.value.available_volume,
+      auction_id: form.value.auction_id,
     })
 
     toast.add({
@@ -288,18 +399,20 @@ const createAuction = async () => {
   } finally {
     isCreating.value = false
     closeCreateModal()
-    getAllAuctions()
+    getAllListings()
   }
 }
 
-const updateAuction = async () => {
+const updateListing = async () => {
   isEditing.value = true
 
   try {
-    const res = await auctionStore.updateAuction(auctionId.value as number, {
-      name: form.value.name,
-      start_time: formatDateTime(form.value.start_time),
-      end_time: formatDateTime(form.value.end_time),
+    const res = await listingStore.updateListing(listingId.value as number, {
+      title: form.value.title,
+      description: form.value.description,
+      base_price: form.value.base_price,
+      available_volume: form.value.available_volume,
+      auction_id: form.value.auction_id,
     })
 
     toast.add({
@@ -322,15 +435,15 @@ const updateAuction = async () => {
   } finally {
     isEditing.value = false
     closeEditModal()
-    getAllAuctions()
+    getAllListings()
   }
 }
 
-const deleteAuction = async () => {
+const deleteListing = async () => {
   isDeleting.value = true
 
   try {
-    const res = await auctionStore.deleteAuction(auctionId.value as number)
+    const res = await listingStore.deleteListing(listingId.value as number)
 
     toast.add({
       severity: 'success',
@@ -352,17 +465,17 @@ const deleteAuction = async () => {
   } finally {
     isDeleting.value = false
     closeDeleteModal()
-    getAllAuctions()
+    getAllListings()
   }
 }
 
-const getAllAuctions = async () => {
+const getAllListings = async () => {
   isRefreshing.value = true
 
   try {
-    const res = await auctionStore.getAllAuctions()
+    const res = await listingStore.getAllListings(route.params.id)
 
-    auctions.value = res.data.auctions.map((p, i) => ({ rowNumber: i + 1, ...p }))
+    listings.value = res.data.listings.map((p, i) => ({ rowNumber: i + 1, ...p }))
 
     toast.add({
       severity: 'success',
@@ -386,7 +499,34 @@ const getAllAuctions = async () => {
   }
 }
 
+const getAllAuctions = async () => {
+  try {
+    const res = await auctionStore.getAllAuctions()
+
+    auctions.value = res.data.auctions.map((p, i) => ({ rowNumber: i + 1, ...p }))
+
+    toast.add({
+      severity: 'success',
+      summary: 'Success Message',
+      detail: (res as { data?: { message?: string } }).data?.message ?? 'Unknown response',
+      life: 3000,
+    })
+  } catch (e) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error Message',
+      detail:
+        (e as { response?: { data?: { error?: string; errors?: string } } }).response?.data
+          ?.error ??
+        (e as { response?: { data?: { errors?: string } } }).response?.data?.errors ??
+        'Unknown error',
+      life: 3000,
+    })
+  }
+}
+
 onMounted(() => {
+  getAllListings()
   getAllAuctions()
 })
 

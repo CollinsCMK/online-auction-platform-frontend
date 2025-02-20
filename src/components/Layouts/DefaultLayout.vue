@@ -131,6 +131,16 @@
           </RouterLink>
 
           <RouterLink
+            to="/admin/listings"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
+          >
+            <FaList
+              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
+            />
+            <span class="font-medium">All Listings</span>
+          </RouterLink>
+
+          <RouterLink
             to="/admin/bids"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
@@ -255,7 +265,7 @@ import CmkCard from '../CmkCard.vue'
 import CmkToggleSwitch from '../CmkToggleSwitch.vue'
 import { useThemeStore } from '../../stores/theme'
 import { onClickOutside } from '@vueuse/core'
-import { FaBars, FaListUl, FaHome, FaChevronRight, FaUser } from 'vue3-icons/fa'
+import { FaBars, FaListUl, FaHome, FaChevronRight, FaUser, FaList } from 'vue3-icons/fa'
 import { VscColorMode } from 'vue3-icons/vsc'
 import { IoNotifications } from 'vue3-icons/io5'
 import { RiAuctionFill } from 'vue3-icons/ri'

@@ -18,8 +18,12 @@ export const useListingStore = defineStore(
       return await $axios.put(`/api/listing/update/${id}`, data)
     }
 
-    const getAllListings = async (id: number) => {
+    const getAllAuctionListings = async (id: number) => {
       return await $axios.get(`/api/listings/get/${id}`)
+    }
+
+    const getAllListings = async() => {
+      return await $axios.get("/api/listings/all")
     }
 
     const deleteListing = async (id: number) => {
@@ -29,6 +33,7 @@ export const useListingStore = defineStore(
     return {
       createListing,
       updateListing,
+      getAllAuctionListings,
       getAllListings,
       deleteListing,
     }

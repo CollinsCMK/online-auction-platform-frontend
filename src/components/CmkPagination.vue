@@ -11,7 +11,11 @@
     </div>
 
     <div class="flex-1" :class="myClass">
-      <div v-for="(item, index) in filteredPaginatedItems" :key="index" class="w-full">
+      <div v-if="filteredPaginatedItems.length === 0" class="flex flex-col items-center justify-center p-8">
+        <div class="text-gray-400 text-lg mb-2">No items found</div>
+        <div class="text-gray-300 text-sm">Try adjusting your search criteria</div>
+      </div>
+      <div v-else v-for="(item, index) in filteredPaginatedItems" :key="index" class="w-full">
         <slot :item="item" />
       </div>
     </div>

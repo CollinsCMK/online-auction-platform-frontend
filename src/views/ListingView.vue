@@ -7,7 +7,7 @@
       :isRefresh="true"
       :isRefreshing="isRefreshing"
       @create="openCreateModal"
-      @refresh="getAllListings"
+      @refresh="getAllAuctionListings"
       :exportableItems="[
         'rowNumber',
         'title',
@@ -136,25 +136,6 @@
         id="available_volume"
       />
     </div>
-
-    <div class="relative w-full">
-      <label for="auction" class="mb-2 block">Select Auction</label>
-
-      <CmkSelector
-        v-model:input="form.auction_name"
-        placeholder="Select auction"
-        searchPlaceholder="Search auction..."
-        inputType="text"
-        :max="50"
-        :autoFocus="true"
-        :disabled="true"
-        error=""
-        :items="auctions"
-        @selectedItem="handleSelectAuction"
-        displayKey="name"
-        id="auction"
-      />
-    </div>
   </CmkModalScrollable>
 
   <CmkModalScrollable
@@ -212,25 +193,6 @@
         id="available_volume"
       />
     </div>
-
-    <div class="relative w-full">
-      <label for="auction" class="mb-2 block">Select Auction</label>
-
-      <CmkSelector
-        v-model:input="form.auction_name"
-        placeholder="Select auction"
-        searchPlaceholder="Search auction..."
-        inputType="text"
-        :max="50"
-        :autoFocus="true"
-        :disabled="true"
-        error=""
-        :items="auctions"
-        @selectedItem="handleSelectAuction"
-        displayKey="name"
-        id="auction"
-      />
-    </div>
   </CmkModalScrollable>
 
   <CmkModal
@@ -283,7 +245,6 @@ import { onMounted, provide, ref } from 'vue'
 import { useThemeStore } from '@/stores/theme'
 import CmkTextInput from '@/components/CmkTextInput.vue'
 import CmkTextArea from '@/components/CmkTextArea.vue'
-import CmkSelector from '@/components/CmkSelector.vue'
 import CmkModal from '@/components/CmkModal.vue'
 import CmkButton from '@/components/CmkButton.vue'
 import CmkButtonLoader from '@/components/CmkButtonLoader.vue'
@@ -299,7 +260,6 @@ interface FormData {
 const route = useRoute()
 const auctions = ref([])
 const listings = ref([])
-const theme = useThemeStore()
 const auctionStore = useAuctionStore()
 const listingStore = useListingStore()
 const toast = useToastStore()
@@ -315,7 +275,6 @@ const form = ref({
   description: '',
   base_price: '',
   available_volume: '',
-  auction_id: '',
   auction_name: '',
 })
 const listingId = ref<null | number>(null)
@@ -330,7 +289,6 @@ const closeCreateModal = () => {
   form.value.description = ''
   form.value.base_price = ''
   form.value.available_volume = ''
-  form.value.auction_id = ''
 }
 
 const openEditModal = (data) => {
@@ -338,7 +296,6 @@ const openEditModal = (data) => {
   form.value.description = data.description
   form.value.base_price = data.base_price
   form.value.available_volume = data.available_volume
-  form.value.auction_id = data.auction_id
   listingId.value = data.id
   isEdit.value = true
 }
@@ -348,7 +305,6 @@ const closeEditModal = () => {
   form.value.description = ''
   form.value.base_price = ''
   form.value.available_volume = ''
-  form.value.auction_id = ''
   isEdit.value = false
 }
 
@@ -362,11 +318,6 @@ const closeDeleteModal = () => {
   isDelete.value = false
 }
 
-const handleSelectAuction = (item: FormData) => {
-  form.value.auction_id = item.id as string
-  form.value.auction_name = item.name as string
-}
-
 const createListing = async () => {
   isCreating.value = true
 
@@ -376,7 +327,7 @@ const createListing = async () => {
       description: form.value.description,
       base_price: form.value.base_price,
       available_volume: form.value.available_volume,
-      auction_id: form.value.auction_id,
+      auction_id: parseInt(route.params.id as string),
     })
 
     toast.add({
@@ -399,7 +350,7 @@ const createListing = async () => {
   } finally {
     isCreating.value = false
     closeCreateModal()
-    getAllListings()
+    getAllAuctionListings()
   }
 }
 
@@ -412,7 +363,7 @@ const updateListing = async () => {
       description: form.value.description,
       base_price: form.value.base_price,
       available_volume: form.value.available_volume,
-      auction_id: form.value.auction_id,
+      auction_id: parseInt(route.params.id as string),
     })
 
     toast.add({
@@ -435,7 +386,7 @@ const updateListing = async () => {
   } finally {
     isEditing.value = false
     closeEditModal()
-    getAllListings()
+    getAllAuctionListings()
   }
 }
 
@@ -465,15 +416,15 @@ const deleteListing = async () => {
   } finally {
     isDeleting.value = false
     closeDeleteModal()
-    getAllListings()
+    getAllAuctionListings()
   }
 }
 
-const getAllListings = async () => {
+const getAllAuctionListings = async () => {
   isRefreshing.value = true
 
   try {
-    const res = await listingStore.getAllListings(route.params.id)
+    const res = await listingStore.getAllAuctionListings(route.params.id)
 
     listings.value = res.data.listings.map((p, i) => ({ rowNumber: i + 1, ...p }))
 
@@ -526,7 +477,7 @@ const getAllAuctions = async () => {
 }
 
 onMounted(() => {
-  getAllListings()
+  getAllAuctionListings()
   getAllAuctions()
 })
 

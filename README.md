@@ -26,8 +26,13 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 ## Project Setup
 
 ```sh
+git clone https://github.com/CollinsCMK/online-auction-platform-frontend.git
+cd online-auction-platform-frontend
 npm install
+mv env.example .env
 ```
+
+Update the variables in the .env file according to your Rust backend configuration.
 
 ### Compile and Hot-Reload for Development
 

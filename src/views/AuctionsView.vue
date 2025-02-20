@@ -30,21 +30,28 @@
       </CmkColumn>
       <CmkColumn header="Action" fixed="right">
         <template #default="slotProps">
-          <div class="flex">
-            <button
-              @click="openEditModal(slotProps.item)"
-              class="mr-2 rounded-full h-8 w-8 border border-green-500 flex items-center justify-center cursor-pointer text-black dark:text-white text-2xl p-2"
-            >
-              <FaEdit />
-            </button>
+        <div class="flex items-center gap-3">
+          <button
+            @click="openEditModal(slotProps.item)"
+            class="rounded-full border-2 border-green-500/30 text-green-500 hover:bg-green-500/10 transition-colors cursor-pointer px-4 py-2 font-medium"
+          >
+            Listings
+          </button>
 
-            <button
-              @click="openDeleteModal(slotProps.item.id)"
-              class="mr-2 rounded-full h-8 w-8 border border-red-500 flex items-center justify-center cursor-pointer text-black dark:text-white text-2xl p-2"
-            >
-              <RiDeleteBin6Fill title="delete" />
-            </button>
-          </div>
+          <button
+            @click="openEditModal(slotProps.item)"
+            class="rounded-full h-9 w-9 border-2 border-green-500 hover:bg-green-500/10 transition-colors flex items-center justify-center cursor-pointer text-green-600 dark:text-green-400"
+          >
+            <FaEdit class="text-lg" />
+          </button>
+
+          <button
+            @click="openDeleteModal(slotProps.item.id)"
+            class="rounded-full h-9 w-9 border-2 border-red-500 hover:bg-red-500/10 transition-colors flex items-center justify-center cursor-pointer text-red-600 dark:text-red-400"
+          >
+            <RiDeleteBin6Fill class="text-lg" title="delete" />
+          </button>
+        </div>
         </template>
       </CmkColumn>
     </CmkTable>
@@ -219,10 +226,6 @@ const closeCreateModal = () => {
   form.value.end_time = new Date()
 }
 
-const formatDateForBackend = (isoString: string): string => {
-  return isoString.replace('Z', '') // Remove the 'Z' for Rust's NaiveDateTime
-}
-
 const openEditModal = (data) => {
   form.value.name = data.name
   form.value.start_time = new Date(data.start_time)
@@ -249,14 +252,20 @@ const closeDeleteModal = () => {
   isDelete.value = false
 }
 
+const formatDateTime = (date) => {
+  if (!date) return null;
+  const d = new Date(date);
+  return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}T${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}:${d.getSeconds().toString().padStart(2, "0")}`;
+};
+
 const createAuction = async () => {
   isCreating.value = true
 
   try {
     const res = await auctionStore.createAuction({
       name: form.value.name,
-      start_time: formatDateForBackend(new Date(form.value.start_time).toISOString()),
-      end_time: formatDateForBackend(new Date(form.value.end_time).toISOString()),
+      start_time: formatDateTime(form.value.start_time),
+      end_time: formatDateTime(form.value.end_time),
     })
 
     toast.add({
@@ -289,8 +298,8 @@ const updateAuction = async () => {
   try {
     const res = await auctionStore.updateAuction(auctionId.value as number, {
       name: form.value.name,
-      start_time: formatDateForBackend(new Date(form.value.start_time).toISOString()),
-      end_time: formatDateForBackend(new Date(form.value.end_time).toISOString()),
+      start_time: formatDateTime(form.value.start_time),
+      end_time: formatDateTime(form.value.end_time),
     })
 
     toast.add({

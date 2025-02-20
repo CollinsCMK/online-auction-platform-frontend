@@ -22,10 +22,15 @@ export const userUserStore = defineStore(
       return await $axios.get('/api/users/get')
     }
 
+    const deleteUser = async (id: number) => {
+      return await $axios.delete(`/api/user/delete/${id}`)
+    }
+
     return {
       createUser,
       getUserPhoneNumber,
       getAllUsers,
+      deleteUser,
     }
   },
   {

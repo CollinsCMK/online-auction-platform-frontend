@@ -35,8 +35,13 @@ const router = createRouter({
     },
     {
       path: '/admin/bids',
-      name: 'admin-bids',
+      name: 'admin-bids-all',
       component: () => import('../views/BidsView.vue'),
+    },
+    {
+      path: '/admin/bids/:id',
+      name: 'admin-bids',
+      component: () => import('../views/BidsListingView.vue'),
     },
     {
       path: '/user',

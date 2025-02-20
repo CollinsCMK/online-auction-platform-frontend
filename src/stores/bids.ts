@@ -26,11 +26,21 @@ export const useBidStore = defineStore(
       return await $axios.get("/api/bids/active");
     }
 
+    const getAllListingsBids = async(id: number) => {
+      return await $axios.get(`/api/bids/listings/get/${id}`);
+    }
+
+    const getActiveListingsBids = async(id: number) => {
+      return await $axios.get(`/api/bids/listings/active/${id}`);
+    }
+
     return {
       createBid,
       getAllUserBids,
       getAllBids,
       getActiveBids,
+      getAllListingsBids,
+      getActiveListingsBids
     }
   },
   {

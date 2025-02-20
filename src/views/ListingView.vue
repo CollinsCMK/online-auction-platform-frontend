@@ -56,10 +56,10 @@
         <template #default="slotProps">
           <div class="flex items-center gap-3">
             <RouterLink
-              :to="`/admin/listings/${slotProps.item.id}`"
+              :to="`/admin/bids/${slotProps.item.id}`"
               class="rounded-full border-2 border-green-500/30 text-green-500 hover:bg-green-500/10 transition-colors cursor-pointer px-4 py-2 font-medium"
             >
-              Listings
+              Bids
             </RouterLink>
 
             <button
@@ -280,8 +280,6 @@ import CmkTable from '@/components/CmkTable.vue'
 import DefaultLayout from '@/components/Layouts/DefaultLayout.vue'
 import { useToastStore } from '@/stores/toast'
 import { onMounted, provide, ref } from 'vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
 import { useThemeStore } from '@/stores/theme'
 import CmkTextInput from '@/components/CmkTextInput.vue'
 import CmkTextArea from '@/components/CmkTextArea.vue'

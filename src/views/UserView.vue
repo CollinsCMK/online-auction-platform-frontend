@@ -32,7 +32,7 @@
             />
           </div>
 
-          <div class="relative">
+          <div v-if="dbPhoneNumber" class="relative">
             <label
               for="name"
               class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -72,31 +72,90 @@ import CmkButtonLoader from '@/components/CmkButtonLoader.vue'
 import CmkPhoneNumber from '@/components/CmkPhoneNumber.vue'
 import CmkTextInput from '@/components/CmkTextInput.vue'
 import TopLayout from '@/components/Layouts/TopLayout.vue'
+import { useToastStore } from '@/stores/toast'
+import { userUserStore } from '@/stores/users'
 import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
+const toast = useToastStore();
+const userStore = userUserStore();
 const form = ref({
   name: '',
   phone_number: '',
 })
 const fullPhoneNumber = ref('')
 const isSubmitting = ref(false)
+const dbPhoneNumber = ref(false);
 
 watch(
-  () => form.value.phone_number,
+  () => fullPhoneNumber.value,
   (newValue) => {
     if (!newValue) {
       fullPhoneNumber.value = ''
+    } else if (newValue.length === 13 && newValue.startsWith('+2547')) {
+      getUserPhoneNumber()
+      dbPhoneNumber.value = true;
     }
   },
 )
 
 const createUser = async () => {
   isSubmitting.value = true
+
   try {
-  } catch (error) {
-    console.log(error)
+    const res = await userStore.createUser({
+      name: form.value.name,
+      phone_number: fullPhoneNumber.value,
+    });
+
+    router.push({ name: "auction" });
+    toast.add({
+      severity: 'success',
+      summary: 'Success Message',
+      detail: (res as { data?: { message?: string } }).data?.message ?? 'Unknown response',
+      life: 3000,
+    })
+  } catch (e) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error Message',
+      detail:
+        (e as { response?: { data?: { error?: string; errors?: string } } }).response?.data
+          ?.error ??
+        (e as { response?: { data?: { errors?: string } } }).response?.data?.errors ??
+        'Unknown error',
+      life: 3000,
+    })
   } finally {
     isSubmitting.value = false
+  }
+}
+
+const getUserPhoneNumber = async() => {
+  try {
+    const res = await userStore.getUserPhoneNumber(fullPhoneNumber.value);
+
+    form.value.name = res.data.name;
+    form.value.phone_number = res.data.phone_number.replace("+254", "0");
+
+    toast.add({
+      severity: 'success',
+      summary: 'Success Message',
+      detail: (res as { data?: { message?: string } }).data?.message ?? 'Unknown response',
+      life: 3000,
+    })
+  } catch (e) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error Message',
+      detail:
+        (e as { response?: { data?: { error?: string; errors?: string } } }).response?.data
+          ?.error ??
+        (e as { response?: { data?: { errors?: string } } }).response?.data?.errors ??
+        'Unknown error',
+      life: 3000,
+    })
   }
 }
 </script>

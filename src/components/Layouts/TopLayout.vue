@@ -1,4 +1,6 @@
 <template>
+  <CmkToast/>
+  
   <div
     class="bg-linear-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-gray-800 dark:text-gray-100 flex flex-col text-sm min-h-screen transition-colors duration-300"
   >
@@ -125,6 +127,7 @@ import { useThemeStore } from '../../stores/theme'
 import { onClickOutside } from '@vueuse/core'
 import { VscColorMode } from 'vue3-icons/vsc'
 import { IoNotifications } from 'vue3-icons/io5'
+import CmkToast from '../CmkToast.vue'
 
 const currentYear = computed(() => new Date().getFullYear())
 const theme = useThemeStore()

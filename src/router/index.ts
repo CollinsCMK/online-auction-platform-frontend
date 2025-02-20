@@ -34,10 +34,15 @@ const router = createRouter({
       component: () => import('../views/UserView.vue'),
     },
     {
-      path: '/auction',
+      path: '/auction/:id',
       name: 'auction',
       component: () => import('../views/AuctionView.vue'),
     },
+    {
+      path: '/bids/:id/:listing_id',
+      name: 'bids',
+      component: () => import('../views/UserBidView.vue'),
+    }
     {
       path: '/:pathMatch(.*)*',
       name: 'page-not-found',

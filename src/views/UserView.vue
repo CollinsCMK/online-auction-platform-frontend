@@ -109,7 +109,7 @@ const createUser = async () => {
       phone_number: fullPhoneNumber.value,
     });
 
-    router.push({ name: "auction" });
+    router.push({ name: "auction", params: { id: res.data.user_id } });
     toast.add({
       severity: 'success',
       summary: 'Success Message',

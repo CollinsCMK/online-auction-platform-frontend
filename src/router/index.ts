@@ -44,6 +44,11 @@ const router = createRouter({
       component: () => import('../views/BidsListingView.vue'),
     },
     {
+      path: '/admin/auction-result',
+      name: 'admin-auction-result',
+      component: () => import('../views/AuctionResultView.vue')
+    },
+    {
       path: '/user',
       name: 'user',
       component: () => import('../views/UserView.vue'),

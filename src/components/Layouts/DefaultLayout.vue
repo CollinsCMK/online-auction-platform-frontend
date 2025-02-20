@@ -121,7 +121,7 @@
           </RouterLink>
 
           <RouterLink
-            to="/auctions"
+            to="/admin/auctions"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
             <RiAuctionFill
@@ -131,17 +131,7 @@
           </RouterLink>
 
           <RouterLink
-            to="/listings"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
-          >
-            <FaListUl
-              class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
-            />
-            <span class="font-medium">Listings</span>
-          </RouterLink>
-
-          <RouterLink
-            to="/bids"
+            to="/admin/bids"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
             <BiDollar
@@ -151,7 +141,7 @@
           </RouterLink>
 
           <RouterLink
-            to="/auction-result"
+            to="/admin/auction-result"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 mb-2 group"
           >
             <RiAuctionFill

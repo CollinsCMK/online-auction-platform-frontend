@@ -74,20 +74,18 @@
     @cancel="closeBidModal"
     @submitForm="createBid"
   >
-    <form @submit.prevent="">
-      <div class="relative">
-        <label for="amount" class="block mb-2">Amount</label>
+  <div class="relative">
+    <label for="amount" class="block mb-2">Amount</label>
 
-        <CmkTextInput
-          v-model:input="amount"
-          inputType="number"
-          placeholder="Enter amount"
-          class="w-full"
-          id="amount"
-          :error="amount ? (Number(amount) <= selectedItem.highest_anyone_bid ? 'Bid amount must be higher than current highest bid' : '') : ''"
-        />
-      </div>
-    </form>
+    <CmkTextInput
+      v-model:input="amount"
+      inputType="number"
+      placeholder="Enter amount"
+      class="w-full"
+      id="amount"
+      :error="amount ? (Number(amount) <= selectedItem.highest_anyone_bid ? 'Bid amount must be higher than current highest bid' : '') : ''"
+    />
+  </div>
   </CmkModalScrollable>
 </template>
 
@@ -133,7 +131,7 @@ const createBid = async() => {
     const res = await bidStore.createBid({
       listing_id: parseInt(listingId.value),
       user_id: parseInt(route.params.id as string),
-      amount: amount.value,
+      amount: amount.value ? amount.value : 0,
     });
     toast.add({
       severity: 'success',

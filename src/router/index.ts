@@ -15,8 +15,8 @@ const router = createRouter({
     },
     {
       path: '/admin/auctions',
-      name: 'admin-auctinons',
-      component: () => import('../views/AuctionsView.vue')
+      name: 'admin-auctions',
+      component: () => import('../views/AuctionsView.vue'),
     },
     {
       path: '/user',
@@ -31,8 +31,8 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: 'page-not-found',
-      component: () => import('../views/PageNotFoundView.vue')
-    }
+      component: () => import('../views/PageNotFoundView.vue'),
+    },
   ],
 })
 

@@ -56,7 +56,7 @@
           </CmkButton>
           <CmkButton
             v-else
-            @click="openBidModal(item.listing_id)"
+            @click="openBidModal(item)"
             class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl"
           >
             Place Bid
@@ -76,7 +76,7 @@
   >
     <form @submit.prevent="">
       <div class="relative">
-        <label for="amount">Amount</label>
+        <label for="amount" class="block mb-2">Amount</label>
 
         <CmkTextInput
           v-model:input="amount"
@@ -84,6 +84,7 @@
           placeholder="Enter amount"
           class="w-full"
           id="amount"
+          :error="amount ? (Number(amount) <= selectedItem.highest_anyone_bid ? 'Bid amount must be higher than current highest bid' : '') : ''"
         />
       </div>
     </form>
@@ -111,15 +112,18 @@ const isLoading = ref(false)
 const isBid = ref(false)
 const amount = ref('');
 const listingId = ref('');
+const selectedItem = ref({});
 
-const openBidModal = (id: string) => {
+const openBidModal = (item) => {
   isBid.value = true
-  listingId.value = id
+  listingId.value = item.listing_id
+  selectedItem.value = item
 }
 
 const closeBidModal = () => {
   isBid.value = false
   listingId.value = ''
+  selectedItem.value = {}
 }
 
 const createBid = async() => {

@@ -21,7 +21,7 @@
       <slot />
     </div>
 
-    <span v-if="error" class="text-[#fa2702] text-[14px] font-semibold">{{ error }}</span>
+    <span v-if="error" class="text-[#fa2702] text-[14px] font-semibold mt-2 block">{{ error }}</span>
   </div>
 </template>
 

@@ -14,19 +14,13 @@ export const useBidStore = defineStore(
       return await $axios.post('/api/bid/create', data)
     }
 
-    const updateAuction = async (id: number, data: Data) => {
-      return await $axios.put(`/api/auction/update/${id}`, data)
-    }
-
-
-    const deleteAuction = async (id: number) => {
-      return await $axios.delete(`/api/auction/delete/${id}`)
+    const getAllUserBids = async(id: number, listing_id: number) => {
+      return await $axios.get(`/api/bids/user/${id}/${listing_id}`)
     }
 
     return {
       createBid,
-      updateAuction,
-      deleteAuction,
+      getAllUserBids,
     }
   },
   {

@@ -11,7 +11,7 @@
     </div>
 
     <div class="flex-1" :class="myClass">
-      <div v-for="(item, index) in filteredPaginatedItems" :key="index">
+      <div v-for="(item, index) in filteredPaginatedItems" :key="index" class="w-full">
         <slot :item="item" />
       </div>
     </div>

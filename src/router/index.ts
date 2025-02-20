@@ -42,7 +42,7 @@ const router = createRouter({
       path: '/bids/:id/:listing_id',
       name: 'bids',
       component: () => import('../views/UserBidView.vue'),
-    }
+    },
     {
       path: '/:pathMatch(.*)*',
       name: 'page-not-found',

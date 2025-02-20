@@ -15,17 +15,17 @@
       <CmkColumn field="name" header="Name"></CmkColumn>
       <CmkColumn header="Start Time">
         <template #default="slotProps">
-          {{ new Date(slotProps.item.start_time).toLocaleString() }}
+          {{ new Date(new Date(slotProps.item.start_time).getTime() + 3 * 60 * 60 * 1000).toLocaleString() }}
         </template>
       </CmkColumn>
       <CmkColumn header="End Time">
         <template #default="slotProps">
-          {{ new Date(slotProps.item.end_time).toLocaleString() }}
+          {{ new Date(new Date(slotProps.item.end_time).getTime() + 3 * 60 * 60 * 1000).toLocaleString() }}
         </template>
       </CmkColumn>
       <CmkColumn header="Updated At">
         <template #default="slotProps">
-          {{ new Date(slotProps.item.updated_at).toLocaleString() }}
+          {{ new Date(new Date(slotProps.item.updated_at).getTime() + 3 * 60 * 60 * 1000).toLocaleString() }}
         </template>
       </CmkColumn>
       <CmkColumn header="Action" fixed="right">
@@ -84,6 +84,8 @@
         v-model="form.start_time"
         placeholder="Start time"
         :dark="theme.isDark as boolean"
+        :auto-position="false"
+        teleport-to="body"
       ></VueDatePicker>
     </div>
 
@@ -94,6 +96,8 @@
         v-model="form.end_time"
         placeholder="End time"
         :dark="theme.isDark as boolean"
+        :auto-position="false"
+        teleport-to="body"
       ></VueDatePicker>
     </div>
   </CmkModalScrollable>
@@ -125,6 +129,8 @@
         v-model="form.start_time"
         placeholder="Start time"
         :dark="theme.isDark as boolean"
+        :auto-position="false"
+        teleport-to="body"
       ></VueDatePicker>
     </div>
 
@@ -135,6 +141,8 @@
         v-model="form.end_time"
         placeholder="End time"
         :dark="theme.isDark as boolean"
+        :auto-position="false"
+        teleport-to="body"
       ></VueDatePicker>
     </div>
   </CmkModalScrollable>
@@ -169,7 +177,7 @@
 
       <CmkButton
         v-else
-        @click="deleteAuction(auctionId)"
+        @click="deleteAuction"
         type="submit"
         class="bg-red-800 text-white dark:bg-red-700 px-4 py-2 rounded-lg hover:bg-red-900 dark:hover:bg-red-800 transition"
       >
@@ -228,8 +236,8 @@ const closeCreateModal = () => {
 
 const openEditModal = (data) => {
   form.value.name = data.name
-  form.value.start_time = new Date(data.start_time)
-  form.value.end_time = new Date(data.end_time)
+  form.value.start_time = new Date(new Date(data.start_time).getTime() + 3 * 60 * 60 * 1000)
+  form.value.end_time = new Date(new Date(data.end_time).getTime() + 3 * 60 * 60 * 1000)
   auctionId.value = data.id
   isEdit.value = true
 }

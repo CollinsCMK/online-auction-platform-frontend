@@ -46,7 +46,7 @@
             <p class="font-bold">{{ item.available_volume }}</p>
           </div>
 
-          <p class="mb-4 text-sm text-gray-500">Ends: {{ new Date(item.end_time).toLocaleString() }}</p>
+          <p class="mb-4 text-sm text-gray-500">Ends: {{ new Date(new Date(item.end_time).getTime() + 3 * 60 * 60 * 1000).toLocaleString() }}</p>
 
           <CmkButton
             v-if="item.status == 'Not Started'"

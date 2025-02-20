@@ -147,7 +147,7 @@
             <BiDollar
               class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform"
             />
-            <span class="font-medium">Bids</span>
+            <span class="font-medium">All Bids</span>
           </RouterLink>
 
           <RouterLink

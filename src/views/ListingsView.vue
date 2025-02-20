@@ -263,7 +263,7 @@
 
       <CmkButton
         v-else
-        @click="deleteListing(listingId)"
+        @click="deleteListing"
         type="submit"
         class="bg-red-800 text-white dark:bg-red-700 px-4 py-2 rounded-lg hover:bg-red-900 dark:hover:bg-red-800 transition"
       >
@@ -299,7 +299,6 @@ interface FormData {
 const route = useRoute()
 const auctions = ref([])
 const listings = ref([])
-const theme = useThemeStore()
 const auctionStore = useAuctionStore()
 const listingStore = useListingStore()
 const toast = useToastStore()
@@ -473,7 +472,7 @@ const getAllListings = async () => {
   isRefreshing.value = true
 
   try {
-    const res = await listingStore.getAllListings(route.params.id)
+    const res = await listingStore.getAllListings()
 
     listings.value = res.data.listings.map((p, i) => ({ rowNumber: i + 1, ...p }))
 

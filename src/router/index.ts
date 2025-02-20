@@ -34,6 +34,11 @@ const router = createRouter({
       component: () => import('../views/UsersView.vue'),
     },
     {
+      path: '/admin/bids',
+      name: 'admin-bids',
+      component: () => import('../views/BidsView.vue'),
+    },
+    {
       path: '/user',
       name: 'user',
       component: () => import('../views/UserView.vue'),

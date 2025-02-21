@@ -121,6 +121,7 @@ const openBidModal = (item) => {
 const closeBidModal = () => {
   isBid.value = false
   listingId.value = ''
+  amount.value = ''
   selectedItem.value = {}
 }
 

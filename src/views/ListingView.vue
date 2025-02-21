@@ -274,7 +274,7 @@ const form = ref({
   title: '',
   description: '',
   base_price: '',
-  available_volume: '',
+  available_volume: '1',
   auction_name: '',
 })
 const listingId = ref<null | number>(null)
@@ -288,7 +288,7 @@ const closeCreateModal = () => {
   form.value.title = ''
   form.value.description = ''
   form.value.base_price = ''
-  form.value.available_volume = ''
+  form.value.available_volume = '1'
 }
 
 const openEditModal = (data) => {
@@ -304,7 +304,7 @@ const closeEditModal = () => {
   form.value.title = ''
   form.value.description = ''
   form.value.base_price = ''
-  form.value.available_volume = ''
+  form.value.available_volume = '1'
   isEdit.value = false
 }
 
@@ -326,7 +326,7 @@ const createListing = async () => {
       title: form.value.title,
       description: form.value.description,
       base_price: form.value.base_price,
-      available_volume: form.value.available_volume,
+      available_volume: form.value.available_volume ? form.value.available_volume : '1',
       auction_id: parseInt(route.params.id as string),
     })
 
@@ -362,7 +362,7 @@ const updateListing = async () => {
       title: form.value.title,
       description: form.value.description,
       base_price: form.value.base_price,
-      available_volume: form.value.available_volume,
+      available_volume: form.value.available_volume ? form.value.available_volume : '1',
       auction_id: parseInt(route.params.id as string),
     })
 

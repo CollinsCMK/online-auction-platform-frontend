@@ -83,7 +83,7 @@
       placeholder="Enter amount"
       class="w-full"
       id="amount"
-      :error="amount ? (Number(amount) <= selectedItem.highest_anyone_bid ? 'Bid amount must be higher than current highest bid' : '') : ''"
+      :error="amount ? (Number(amount) <= selectedItem.base_price ? 'Bid amount must be higher than base price' : '') : ''"
     />
   </div>
   </CmkModalScrollable>
